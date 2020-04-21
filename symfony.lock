@@ -1,11 +1,14 @@
 {
     "php": {
-        "version": "7.1"
+        "version": "7.4"
     },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/event-dispatcher": {
         "version": "1.0.0"
     },
     "psr/log": {
@@ -32,9 +35,6 @@
             "./bin/console",
             "./config/bootstrap.php"
         ]
-    },
-    "symfony/debug": {
-        "version": "v4.4.7"
     },
     "symfony/dependency-injection": {
         "version": "v4.4.7"
