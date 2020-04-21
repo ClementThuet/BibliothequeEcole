@@ -1062,16 +1062,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v5.0.0",
+            "version": "v5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "c5c226b6f164ae4f95c4bffbe940c81050940eda"
+                "reference": "26fb006a2c7b6cdd23d52157b05f8414ffa417b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/c5c226b6f164ae4f95c4bffbe940c81050940eda",
-                "reference": "c5c226b6f164ae4f95c4bffbe940c81050940eda",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/26fb006a2c7b6cdd23d52157b05f8414ffa417b6",
+                "reference": "26fb006a2c7b6cdd23d52157b05f8414ffa417b6",
                 "shasum": ""
             },
             "require": {
@@ -1113,7 +1113,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2019-11-18T17:27:11+00:00"
+            "time": "2020-03-30T14:14:32+00:00"
         },
         {
             "name": "symfony/http-kernel",
@@ -1213,16 +1213,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v5.0.0",
+            "version": "v5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "76f3c09b7382bf979af7bcd8e6f8033f1324285e"
+                "reference": "481b7d6da88922fb1e0d86a943987722b08f3955"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/76f3c09b7382bf979af7bcd8e6f8033f1324285e",
-                "reference": "76f3c09b7382bf979af7bcd8e6f8033f1324285e",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/481b7d6da88922fb1e0d86a943987722b08f3955",
+                "reference": "481b7d6da88922fb1e0d86a943987722b08f3955",
                 "shasum": ""
             },
             "require": {
@@ -1271,7 +1271,7 @@
                 "mime",
                 "mime-type"
             ],
-            "time": "2019-11-18T17:27:11+00:00"
+            "time": "2020-03-27T16:56:45+00:00"
         },
         {
             "name": "symfony/polyfill-intl-idn",
@@ -1333,20 +1333,6 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-09T19:04:49+00:00"
         },
         {
@@ -1406,20 +1392,6 @@
                 "portable",
                 "shim"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-09T19:04:49+00:00"
         },
         {
@@ -1474,20 +1446,6 @@
                 "polyfill",
                 "portable",
                 "shim"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-02-27T09:26:54+00:00"
         },
@@ -1546,20 +1504,6 @@
                 "polyfill",
                 "portable",
                 "shim"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-02-27T09:26:54+00:00"
         },
@@ -1903,6 +1847,5 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "platform-dev": []
 }
