@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Liste des emprunts</h1>
+                <table>
+                    <tr>
+                        <th>Livre</th>
+                        <th>Elève</th>
+                        <th>Date d'emprunt</th>
+                        <th>Date de retour</th>
+                    </tr>
+                    {%for borrow in borrows %}
+                        <tr>
+                            <td>{{borrow.book.title}}</td>
+                            <td>{{borrow.pupil.firstName}} {{borrow.pupil.lastName}}</td>
+                            <td>{{borrow.date|date('d-m-Y')}}</td>
+                            {%if borrow.dateOfReturn is not null%}
+                                <td>{{borrow.dateOfReturn|date('d-m-Y')}}</td>
+                            {% else %}
+                                <td>Pas encore rendu</td>
+                            {%endif %}
+                            
+                        </tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Choix du livre{% endblock %}
+{% block body %}
+    <h1> Livre rendu !</h1>
+       <div class="book-picture-return" >
+            {% if book.image.url is defined and book.image.url is not null %}
+                <img style="width:15vw;" src="{{book.image.url}}" alt="{{book.image.alt}}">  
+            {% else %}
+                <img style="width:15vw;" src="/BEB/public/img/default-book.png" alt="Image par défaut}">  
+            {%endif%}
+        </div>
+        <div class="pupil-picture-return" >
+            {% if pupil.image.url is defined and pupil.image.url is not null %}
+                <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">  
+            {% else %}
+                 <img style="width:15vw;" src="/BEB/public/img/default-pupil.jpg" alt="Image par défaut">  
+            {%endif%}
+        </div>    
+        
+       
+            
+        </div>
+{% endblock %}

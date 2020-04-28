@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}Choix du livre{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1> Choix du livre</h1>
+                {%for book in books %}
+                   <a href="{{path('select_book_borrow',{'idPupil':pupil.id, 'idBook':book.id})}}">
+                        <div class="book-picture-select" >
+                            {% if book.image.url is defined and book.image.url is not null %}
+                                <img style="width:15vw;" src="{{book.image.url}}" alt="{{book.image.alt}}">  
+                            {% else %}
+                                <img style="width:15vw;" src="/BEB/public/img/default-book.png" alt="Image par défaut">  
+                            {%endif%}
+                        </div>
+                    </a>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+{% endblock %}

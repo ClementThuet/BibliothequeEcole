@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Liste des élèves</h1>
+                <table>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Date de naissance</th>
+                        <th>Niveau</th>
+                        <th>Modifier</th>
+                    </tr>
+                    {%for pupil in pupils %}
+                        <tr onclick="window.location='{{path('pupil_detail',{'id':pupil.id})}}'">
+                            <td>{{pupil.lastName}}</td>
+                            <td>{{pupil.firstName}}</td>
+                            <td>{{pupil.dateOfBirth|date('d-m-Y')}}</td>
+                            <td>{{pupil.grade}}</td>
+                            <td><a href="{{path('pupil_edit',{'idPupil':pupil.id})}}">Modifier</a>
+                        </tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Clique sur ta photo</h1>
+                {%for pupil in pupils %}
+                    <a href="{{path('select_pupil_borrow',{'idPupil':pupil.id})}}">
+                        <div class="pupil-picture-hp" >
+                            {% if pupil.image.url is defined and pupil.image.url is not null %}
+                                <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">
+                            {%endif%}
+                        </div>
+                    </a>
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+{% endblock %}

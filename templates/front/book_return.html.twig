@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}Choix du livre{% endblock %}
+{% block body %}
+    <h1> Retour du livre</h1>
+       <div class="book-picture-return" >
+            {% if book.image.url is defined and book.image.url is not null %}
+                <img style="width:15vw;" src="{{book.image.url}}" alt="{{book.image.alt}}">  
+            {% else %}
+                <img style="width:15vw;" src="/BEB/public/img/default-book.png" alt="Image par défaut}">  
+            {%endif%}
+            {{book.title}}{{book.code}}
+        </div>
+        <div class="pupil-picture-return" >
+            {% if pupil.image.url is defined and pupil.image.url is not null %}
+                <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">  
+            {% else %}
+                 <img style="width:15vw;" src="/BEB/public/img/default-pupil.jpg" alt="Image par défaut">  
+            {%endif%}
+            
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        
+            {{ form_start(form) }}
+            <div>
+                {{ form_errors(form) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.code, "Code ", {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.code) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            {{ form_end(form) }}
+            </div>
+        </div>
+{% endblock %}

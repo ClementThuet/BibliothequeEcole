@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+    <h1> Bienvenue dans la bibliothèque de l'école de Boursonne</h1>
+    
+    {{book.title}}
+    {{book.author}}
+    {{book.theme}}
+    {{book.sommary}}
+    {{book.releaseDate|date('d-m-Y')}}
+    {{book.nbBorrow}}
+    {{book.dateLastBorrow|date('d-m-Y')}}
+    {{book.dateLastReturn|date('d-m-Y')}}
+    {{book.originalLibrary}}
+    {%if book.image.url is defined %}
+        <img src="{{book.image.url}}" alt="{{book.image.alt}}">
+    {%endif%}
+{% endblock %}

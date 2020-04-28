@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Liste des livres</h1>
+                <table>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Thème</th>
+                        <th>Résumé</th>
+                        <th>Dernier emprunt</th>
+                        <th>Retourné le</th>
+                        <th>Bibliothèque d'origine</th>
+                        <th>Modifier</th>
+                    </tr>
+                    {%for book in books %}
+                        <tr onclick="window.location='{{path('book_detail',{'id':book.id})}}'">
+                            <td>{{book.title}}</td>
+                            <td>{{book.author}}</td>
+                            <td>{{book.theme}}</td>
+                            <td>{{book.sommary}}</td>
+                            <td>{{book.dateLastBorrow|date('d-m-Y')}}</td>
+                            <td>{{book.dateLastReturn|date('d-m-Y')}}</td>
+                            <td>{{book.originalLibrary}}</td>
+                            <td><a href="{{path('book_edit',{'idBook':book.id})}}">Modifier</a>
+                        </tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </div>
+    </div>
+   
+    
+{% endblock %}

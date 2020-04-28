@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modifier {{pupil.firstName}} {{pupil.lastName}}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Modifier {{pupil.firstName}} {{pupil.lastName}}</h1>
+                {{ form_start(form) }}
+                <div>
+                    {{ form_errors(form) }}
+                </div>
+               <div class="form-group">
+                    {{ form_label(form.lastName, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.firstName, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                </div>   
+                <div class="form-group">
+                    {{ form_label(form.dateOfBirth, 'Date de naissance', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.dateOfBirth, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.grade, 'Niveau', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.grade, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.image, "Photo ", {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.image) }}
+                </div>
+                {% if pupil.image.url is defined and pupil.image.url is not null %}
+                    <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">
+                {%endif%}
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <a href="{{path('pupil_delete',{'idPupil':pupil.id})}}"<button class="btn btn-danger">Supprimer</button></a>
+            </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
