@@ -9,9 +9,10 @@ use App\Form\Type\BookType;
 use App\Entity\Book;
 use App\Form\Type\PupilType;
 Use App\Entity\Pupil;
-use App\Form\Type\BorrowType;
 Use App\Entity\Borrow;
 use App\Entity\Image;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class BackController extends AbstractController{
     
@@ -53,6 +54,15 @@ class BackController extends AbstractController{
         return $this->render('back/borrow/borrows_list.html.twig',['borrows'=>$borrows]);
     }
     
+     /**
+     * @Route("/admin/emprunts/non-rendu", name="borrows_not_returned_list")
+     */
+    public function borrowsNotReturnedList()
+    {
+        $repository = $this->getDoctrine()->getRepository(Borrow::class);
+        $borrows = $repository->findByNotReturn();
+        return $this->render('back/borrow/borrows_not_returned_list.html.twig',['borrows'=>$borrows]);
+    }
     
     /**
      * @Route("/admin/eleve/{id}", name="pupil_detail", requirements={"id"="\d+"})
@@ -105,18 +115,19 @@ class BackController extends AbstractController{
                 // Move the file to the directory where brochures are stored
                 try {
                     $imageUploaded->move(
-                        $this->getParameter('images_books_directory'),
+                        $this->getParameter('uploads_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
                 $image = new Image();
-                $image->setUrl('/BEB/public/uploads/books_images/'.$newFilename);
+                $image->setUrl('/BEB/public/uploads/img/'.$newFilename);
                 $image->setAlt($originalFilename);
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $book->setImage($image);
+                $book->setIsBorrowed(0);
                 $entityManager->persist($image);
                 $entityManager->flush();
             }
@@ -146,13 +157,13 @@ class BackController extends AbstractController{
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$imageUploaded->guessExtension();
                 try {
                     $imageUploaded->move(
-                        $this->getParameter('images_pupils_directory'),
+                        $this->getParameter('uploads_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                 }
                 $image = new Image();
-                $image->setUrl('/BEB/public/uploads/pupils_images/'.$newFilename);
+                $image->setUrl('/BEB/public/uploads/img/'.$newFilename);
                 $image->setAlt($originalFilename);
                 $pupil->setImage($image);
                 $entityManager->persist($image);
@@ -185,13 +196,13 @@ class BackController extends AbstractController{
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$imageUploaded->guessExtension();
                 try {
                     $imageUploaded->move(
-                        $this->getParameter('images_pupils_directory'),
+                        $this->getParameter('uploads_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                 }
                 $image = new Image();
-                $image->setUrl('/BEB/public/uploads/pupils_images/'.$newFilename);
+                $image->setUrl('/BEB/public/uploads/img/'.$newFilename);
                 $image->setAlt($originalFilename);
                 $pupil->setImage($image);
                 $entityManager->persist($image);
@@ -209,8 +220,8 @@ class BackController extends AbstractController{
      */
     public function editBook($idBook, Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Book::class);
-        $book = $repository->find($idBook);
+        $repositoryBook = $this->getDoctrine()->getRepository(Book::class);
+        $book = $repositoryBook->find($idBook);
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -224,13 +235,13 @@ class BackController extends AbstractController{
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$imageUploaded->guessExtension();
                 try {
                     $imageUploaded->move(
-                        $this->getParameter('images_books_directory'),
+                        $this->getParameter('uploads_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                 }
                 $image = new Image();
-                $image->setUrl('/BEB/public/uploads/books_images/'.$newFilename);
+                $image->setUrl('/BEB/public/uploads/img/'.$newFilename);
                 $image->setAlt($originalFilename);
                 $book->setImage($image);
                 $entityManager->persist($image);
@@ -267,5 +278,134 @@ class BackController extends AbstractController{
         $entityManager->remove($pupil);
         $entityManager->flush();
         return $this->redirectToRoute('pupils_list');
+    }
+    
+    /**
+     * @Route("/admin/livre/{idBook}/historique", name="book_history")
+     */
+    public function BookHistory($idBook)
+    {
+        $repositoryBook = $this->getDoctrine()->getRepository(Book::class);
+        $book = $repositoryBook->find($idBook);
+        $repositoryBorrow = $this->getDoctrine()->getRepository(Borrow::class);
+        $borrows = $repositoryBorrow->findByBook($book->getId());
+        return $this->render('back/book/book_history.html.twig',['book'=>$book,'borrows'=>$borrows]);
+    }
+    
+    /**
+     * @Route("/admin/eleve/{idPupil}/historique", name="pupil_history")
+     */
+    public function PupilHistory($idPupil)
+    {
+        $repositoryPupil = $this->getDoctrine()->getRepository(Pupil::class);
+        $pupil = $repositoryPupil->find($idPupil);
+        $repositoryBorrow = $this->getDoctrine()->getRepository(Borrow::class);
+        $borrows = $repositoryBorrow->findByPupil($pupil->getId());
+        return $this->render('back/pupil/pupil_history.html.twig',['pupil'=>$pupil,'borrows'=>$borrows]);
+    }
+    
+    /**
+     * @Route("/admin/book/search/{field}-{value}", name="book_search")
+     */
+    public function bookSearch(Request $request, $field, $value)
+    {
+       
+        if($request->request->get('value') !== 'nullValue'){
+            $repositoryBook = $this->getDoctrine()->getRepository(Book::class);
+            $listBooks = $repositoryBook->findByFieldValue($field, $value);
+            $books='';
+            foreach ($listBooks as $book)
+            {
+                $dateLastBorrow = ($book->getDateLastBorrow())? $book->getDateLastBorrow()->format('d-m-Y') : 'Jamais';
+                $dateLastReturn = ($book->getDateLastReturn())? $book->getDateLastReturn()->format('d-m-Y') : 'Non';
+                $isBorrowed = ($book->getIsBorrowed())? 'Oui' : 'Non';
+                $books.= '<tr class="result-book">
+                            <td>'.$book->getTitle().'</td>
+                            <td>'.$book->getAuthor().'</td>
+                            <td>'.$book->getTheme().'</td>
+                            <td>'.$book->getCode().'</td>
+                            <td>'.$isBorrowed.'</td>
+                            <td>'.$dateLastBorrow.'</td>
+                            <td>'.$dateLastReturn.'</td>
+                            <td><a href="/beb/public/admin/livre/'.$book->getId().'/modifier">Modifier</a>
+                        </tr>';
+
+            }
+            $response = new Response(json_encode(array(
+                'books' => $books
+            )));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+        $response = new Response(json_encode(array(
+                'books' => ''
+            )));
+        return $response;
+    }
+    
+    /**
+     * @Route("/admin/pupil/search/{field}-{value}", name="pupil_search")
+     */
+    public function pupilSearch(Request $request, $field, $value)
+    {
+        if($request->request->get('value') !== 'nullValue'){
+            $repositoryPupil = $this->getDoctrine()->getRepository(Pupil::class);
+            $listPupils = $repositoryPupil->findByFieldValue($field, $value);
+            $pupils='';
+            foreach ($listPupils as $pupil)
+            {
+                $dateOfBirth = ($pupil->getDateOfBirth())? $pupil->getDateOfBirth()->format('d-m-Y') : 'Non renseignée';
+                $pupils.= '<tr class="result-pupil">
+                            <td>'.$pupil->getLastName().'</td>
+                            <td>'.$pupil->getFirstName().'</td>
+                            <td>'.$dateOfBirth.'</td>
+                            <td>'.$pupil->getGrade().'</td>
+                            <td><a href="/beb/public/admin/eleve/'.$pupil->getId().'/modifier">Modifier</a>
+                        </tr>';
+
+            }
+            $response = new Response(json_encode(array(
+                'pupils' => $pupils
+            )));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+        $response = new Response(json_encode(array(
+                'pupils' => ''
+            )));
+        return $response;
+    }
+    
+    /**
+     * @Route("/admin/borrow/search/{field}-{value}", name="borrow_search")
+     */
+    public function borrowSearch(Request $request, $field, $value)
+    {
+        if($request->request->get('value') !== 'nullValue'){
+            $repositoryBorrow = $this->getDoctrine()->getRepository(Borrow::class);
+            $listBorrows = $repositoryBorrow->findByFieldValue($field, $value);
+            $borrows='';
+            foreach ($listBorrows as $borrow)
+            {
+                $dateBorrow = ($borrow->getDate())? $borrow->getDate()->format('d-m-Y') : 'Date d\'emprunt non connue';
+                $dateOfReturn = ($borrow->getDateOfReturn())? $borrow->getDateOfReturn()->format('d-m-Y') : 'Non rendu';
+                $borrows.= '<tr class="result-borrow">
+                            <td>'.$borrow->getBook()->getTitle().'</td>
+                            <td>'.$borrow->getPupil()->getFirstName().' '.$borrow->getPupil()->getLastName().'</td>
+                            <td>'.$dateBorrow.'</td>
+                            <td>'.$dateOfReturn.'</td>
+                        </tr>';
+
+            }
+            $response = new Response(json_encode(array(
+                'borrows' => $borrows
+            )));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+        $response = new Response(json_encode(array(
+                'borrows' => ''
+            )));
+        return $response;
     }
 }

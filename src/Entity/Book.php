@@ -26,12 +26,6 @@ class Book
     private $title;
     
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     */
-    private $code;
-
-    /**
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $author;
@@ -41,24 +35,14 @@ class Book
      */
     private $theme;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $sommary;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\Type("\DateTime")
-     */
-    private $releaseDate;
     
-     /**
-     * @ORM\Column(type="boolean")
+    /**
+     * @ORM\Column(type="boolean", options={"default":0})
      */
     private $isBorrowed;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default":0})
      */
     private $nbBorrow;
 
@@ -74,20 +58,29 @@ class Book
      */
     private $dateLastReturn;
 
-    /**
-     * @ORM\Column(type="string", length=200, nullable=true)
-     */
-    private $originalLibrary;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
-
+    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Borrow", mappedBy="book", orphanRemoval=true)
      */
     private $borrow;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     */
+    private $code;
+    
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $originalLibrary;
+    
+    
 
     public function __construct()
     {
@@ -143,18 +136,6 @@ class Book
     public function setTheme(?string $theme): self
     {
         $this->theme = $theme;
-
-        return $this;
-    }
-
-    public function getSommary(): ?string
-    {
-        return $this->sommary;
-    }
-
-    public function setSommary(?string $sommary): self
-    {
-        $this->sommary = $sommary;
 
         return $this;
     }

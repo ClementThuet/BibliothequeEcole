@@ -5,15 +5,20 @@
         <div class="row">
             <div class="col-12">
                 <h1>Liste des emprunts</h1>
-                <table>
+                <a href="{{path('borrows_not_returned_list')}}"><button>Voir les emprunts en cours</button></a><br><br>
+                <table  id="table-borrow">
                     <tr>
-                        <th>Livre</th>
-                        <th>Elève</th>
-                        <th>Date d'emprunt</th>
-                        <th>Date de retour</th>
+                        <th>Livre</th><input type="text"  placeholder="ex : Spot" id="title-input" data-field="book.title">
+                        <button class="searchBorrow">Go</button>
+                        <th>Elève</th><input type="text"  placeholder="ex : Corentin" id="firstName-input" data-field="pupil.last_name">
+                        <button class="searchBorrow">Go</button>
+                        <th>Date d'emprunt</th><input type="text"  placeholder="ex : 2020-05-26" id="date-input" data-field="date">
+                        <button class="searchBorrow">Go</button>
+                        <th>Date de retour</th><input type="text"  placeholder="ex : 2020-05-26" id="dateOfReturn-input" data-field="date_of_return">
+                        <button class="searchBorrow">Go</button>
                     </tr>
                     {%for borrow in borrows %}
-                        <tr>
+                        <tr class="result-borrow">
                             <td>{{borrow.book.title}}</td>
                             <td>{{borrow.pupil.firstName}} {{borrow.pupil.lastName}}</td>
                             <td>{{borrow.date|date('d-m-Y')}}</td>

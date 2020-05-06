@@ -6,20 +6,21 @@
             <div class="col-12">
                 <h1>Emprunt effectué !</h1>
                 <div class="book-picture-return" >
-                    {% if book.image.url is defined and book.image.url is not null %}
-                        <img style="width:15vw;" src="{{book.image.url}}" alt="{{book.image.alt}}">  
+                    {% if borrow.book.image.url is defined and borrow.book.image.url is not null %}
+                        <img style="width:15vw;" src="{{borrow.book.image.url}}" alt="{{borrow.book.image.alt}}">  
                     {% else %}
                         <img style="width:15vw;" src="/BEB/public/img/default-book.png" alt="Image par défaut}">  
                     {%endif%}
                 </div>
                 <div class="pupil-picture-return" >
-                    {% if pupil.image.url is defined and pupil.image.url is not null %}
-                        <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">  
+                    {% if borrow.pupil.image.url is defined and borrow.pupil.image.url is not null %}
+                        <img style="width:15vw;" src="{{borrow.pupil.image.url}}" alt="{{borrow.pupil.image.alt}}">  
                     {% else %}
                          <img style="width:15vw;" src="/BEB/public/img/default-pupil.jpg" alt="Image par défaut">  
                     {%endif%}
                 </div>    
             </div>
+            <a href="{{path('cancel_borrow',{'idBorrow':borrow.id})}}"> <button class="btn btn-danger">Annuler l'emprunt</button></a>
         </div>
     </div>
 {% endblock %}

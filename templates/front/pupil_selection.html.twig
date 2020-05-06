@@ -10,6 +10,9 @@
                         <div class="pupil-picture-hp" >
                             {% if pupil.image.url is defined and pupil.image.url is not null %}
                                 <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">
+                            {% else %}
+                                <img style="width:15vw;" src="/BEB/public/img/default-pupil.jpg" alt="{{pupil.nom}} {{pupil.prenom}}"> 
+                                <h4>{{pupil.nom}} {{pupil.prenom}}</h4>
                             {%endif%}
                         </div>
                     </a>

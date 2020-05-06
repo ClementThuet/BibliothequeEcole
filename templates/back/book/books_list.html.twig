@@ -5,25 +5,33 @@
         <div class="row">
             <div class="col-12">
                 <h1>Liste des livres</h1>
-                <table>
+                <table id="table-book">
                     <tr>
-                        <th>Titre</th>
-                        <th>Auteur</th>
-                        <th>Thème</th>
-                        <th>Résumé</th>
-                        <th>Dernier emprunt</th>
-                        <th>Retourné le</th>
-                        <th>Bibliothèque d'origine</th>
+                        <th>Titre</th> <input type="text"  placeholder="ex : Popi" id="title-input" data-field="title">
+                        <button class="searchBook">Go</button>
+                        <th>Auteur</th> <input type="text"  placeholder="ex : Clément"id="author-input" data-field="author">
+                        <button class="searchBook">Go</button>
+                        <th>Thème</th> <input type="text"  placeholder="ex : nature" id="theme-input" data-field="theme"> 
+                        <button class="searchBook">Go</button>
+                        <th>Code</th> <input type="text" placeholder="ex : 134456" id="code-input" data-field="code"> 
+                        <button class="searchBook">Go</button>
+                        <th>Emprunté</th> <input type="text" placeholder="0 pour non, 1 pour Oui" id="isBorrowed-input" data-field="is_borrowed"> 
+                        <button class="searchBook">Go</button>
+                        <th>Dernier emprunt</th> <input type="text" placeholder="ex : 2020-05-31" id="lastBorrow-input" data-field="date_last_borrow"> 
+                        <button class="searchBook">Go</button>
+                        <th>Retourné le</th> <input type="text" placeholder="ex : 2020-05-31" id="dateReturn-input" data-field="date_last_return"> 
+                        <button class="searchBook">Go</button>
                         <th>Modifier</th>
                     </tr>
                     {%for book in books %}
-                        <tr onclick="window.location='{{path('book_detail',{'id':book.id})}}'">
+                        <tr class="result-book" onclick="window.location='{{path('book_detail',{'id':book.id})}}'">
                             <td>{{book.title}}</td>
                             <td>{{book.author}}</td>
                             <td>{{book.theme}}</td>
-                            <td>{{book.sommary}}</td>
-                            <td>{{book.dateLastBorrow|date('d-m-Y')}}</td>
-                            <td>{{book.dateLastReturn|date('d-m-Y')}}</td>
+                            <td>{{book.code}}</td>
+                            <td>{% if book.isBorrowed == true %} Oui{% else%} Non {%endif%}</td>
+                            <td>{%if book.dateLastBorrow is not null%} {{book.dateLastBorrow|date('d-m-Y')}}{%else%}Jamais{%endif%}</td>
+                            <td>{%if book.dateLastReturn%}{{book.dateLastReturn|date('d-m-Y')}}{%else%}Non{%endif%}</td>
                             <td>{{book.originalLibrary}}</td>
                             <td><a href="{{path('book_edit',{'idBook':book.id})}}">Modifier</a>
                         </tr>

@@ -2,5 +2,29 @@
 {% block title %}Accueil{% endblock %}
 {% block body %}
     <h1> Bienvenue dans la bibliothèque de l'école de Boursonne</h1>
-    <h3>Ici on aura la liste des emprunts </h3>
+    
+    Emprunt effectué le {{borrow.date|date('d-m-Y')}} rendu le 
+    {% if borrow.dateOfReturn is not null%}
+    {{borrow.dateOfReturn|date('d-m-Y')}}
+    {%else%}
+        Pas encore rendu
+    {%endif%}
+    <br><br>
+    {{borrow.book.title}}
+    {%if borrow.book.image.url is defined %}
+        <img style="width:15vw;" src="{{borrow.book.image.url}}" alt="{{borrow.book.image.alt}}">
+    {%endif%}
+    {{borrow.book.author}}
+    {{borrow.book.theme}}
+    {{borrow.book.code}}
+    <br><br>
+    {{borrow.pupil.lastName}}
+    {{borrow.pupil.firstName}}
+    {%if borrow.pupil.image.url is defined %}
+        <img style="width:15vw;" src="{{borrow.pupil.image.url}}" alt="{{borrow.pupil.image.alt}}">
+    {%endif%}
+    {{borrow.pupil.dateOfBirth|date('d-m-Y')}}
+    {{borrow.pupil.grade}}
+    
+    
 {% endblock %}

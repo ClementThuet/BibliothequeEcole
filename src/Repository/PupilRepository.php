@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Pupil;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * @method Pupil|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,22 +20,14 @@ class PupilRepository extends ServiceEntityRepository
         parent::__construct($registry, Pupil::class);
     }
 
-    // /**
-    //  * @return Pupil[] Returns an array of Pupil objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+    public function findByFieldValue($field,$value){
+        
+        $entityManager = $this->getEntityManager();
+        $rsm = new ResultSetMappingBuilder($entityManager);
+        $rsm->addRootEntityFromClassMetadata('App\Entity\Pupil', 'pupil');
+        $query = $entityManager->createNativeQuery('SELECT * FROM `pupil` WHERE `'.$field.'` LIKE "%'.$value.'%";', $rsm);
+        return $query->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Pupil

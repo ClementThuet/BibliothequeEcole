@@ -5,16 +5,20 @@
         <div class="row">
             <div class="col-12">
                 <h1>Liste des élèves</h1>
-                <table>
+                <table id="table-pupil">
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Date de naissance</th>
-                        <th>Niveau</th>
+                        <th>Nom</th><input type="text"  placeholder="ex : Lefevre" id="lastName-input" data-field="last_name">
+                        <button class="searchPupil">Go</button>
+                        <th>Prénom</th><input type="text"  placeholder="ex : Corentin" id="firstName-input" data-field="first_name">
+                        <button class="searchPupil">Go</button>
+                        <th>Date de naissance</th><input type="text"  placeholder="ex : 2018-12-26" id="dateOfBirth-input" data-field="date_of_birth">
+                        <button class="searchPupil">Go</button>
+                        <th>Niveau</th><input type="text"  placeholder="ex : PS" id="grade-input" data-field="grade">
+                        <button class="searchPupil">Go</button>
                         <th>Modifier</th>
                     </tr>
                     {%for pupil in pupils %}
-                        <tr onclick="window.location='{{path('pupil_detail',{'id':pupil.id})}}'">
+                        <tr class="result-pupil" onclick="window.location='{{path('pupil_detail',{'id':pupil.id})}}'">
                             <td>{{pupil.lastName}}</td>
                             <td>{{pupil.firstName}}</td>
                             <td>{{pupil.dateOfBirth|date('d-m-Y')}}</td>

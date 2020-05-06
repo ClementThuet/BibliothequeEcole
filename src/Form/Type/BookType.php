@@ -17,9 +17,8 @@ class BookType extends AbstractType{
             ->add('title', TextType::class)
             ->add('author', TextType::class)
             ->add('theme', TextType::class)
-            ->add('sommary', TextType::class) 
-            ->add('releaseDate', DateType::class, ['widget' => 'single_text'])
             ->add('originalLibrary', TextType::class) 
+            ->add('code', TextType::class) 
             ->add('image', FileType::class, [
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,

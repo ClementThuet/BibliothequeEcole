@@ -43,7 +43,7 @@ class FrontController extends AbstractController{
     /**
      * @Route("/retour-livre/{idPupil}", name="return_book")
      */
-    public function returnBook($idPupil,Request $request)
+    public function returnBook(int $idPupil,Request $request)
     {
         $repositoryBorrow = $this->getDoctrine()->getRepository(Borrow::class);
         $currentBorrow = $repositoryBorrow->findByCurrentBorrow($idPupil);
@@ -90,6 +90,19 @@ class FrontController extends AbstractController{
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($borrow);
         $entityManager->flush();
-        return $this->render('front/book_borrow_summary.html.twig',['pupil'=>$pupil,'book'=>$book]);
+        return $this->render('front/book_borrow_summary.html.twig',['borrow'=>$borrow]);
+    }
+    
+    /**
+     * @Route("/annuler-emprunt/{idBorrow}", name="cancel_borrow")
+     */
+    public function cancelBorrow(int $idBorrow)
+    {
+        $repositoryBorrow = $this->getDoctrine()->getRepository(Borrow::class);
+        $borrow = $repositoryBorrow->find($idBorrow);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($borrow);
+        $entityManager->flush();
+        return $this->redirectToRoute('index');
     }
 }

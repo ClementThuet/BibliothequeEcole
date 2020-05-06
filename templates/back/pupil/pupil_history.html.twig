@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+    <h1>{{pupil.lastName}} {{pupil.firstName}} - Historique</h1>
+    
+    {{pupil.lastName}} {{pupil.firstName}} {{pupil.dateOfBirth|date('d-m-Y')}} {{pupil.grade}} 
+    {%if pupil.image.url is defined %}
+        <img style="width: 10vw;"src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">
+    {%endif%}
+    <br><br><br>
+    {% for borrow in borrows %}
+        Emprunt de {{borrow.book.title}}
+        le {{borrow.date|date('d-m-Y')}} rendu le 
+        {% if borrow.dateOfReturn is not null%}
+        {{borrow.dateOfReturn|date('d-m-Y')}}
+        {%else%}
+            Pas encore rendu
+        {%endif%}
+        <br>
+    {% endfor %}
+{% endblock %}
