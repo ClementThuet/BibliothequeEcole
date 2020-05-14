@@ -4,19 +4,36 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Liste des emprunts</h1>
-                <a href="{{path('borrows_not_returned_list')}}"><button>Voir les emprunts en cours</button></a><br><br>
-                <table  id="table-borrow">
-                    <tr>
-                        <th>Livre</th><input type="text"  placeholder="ex : Spot" id="title-input" data-field="book.title">
-                        <button class="searchBorrow">Go</button>
-                        <th>Elève</th><input type="text"  placeholder="ex : Corentin" id="firstName-input" data-field="pupil.last_name">
-                        <button class="searchBorrow">Go</button>
-                        <th>Date d'emprunt</th><input type="text"  placeholder="ex : 2020-05-26" id="date-input" data-field="date">
-                        <button class="searchBorrow">Go</button>
-                        <th>Date de retour</th><input type="text"  placeholder="ex : 2020-05-26" id="dateOfReturn-input" data-field="date_of_return">
-                        <button class="searchBorrow">Go</button>
-                    </tr>
+                <h1 class="title-h1">Liste des emprunts</h1>
+                <div class="bt-add-pupil-container">
+                    <a href="{{path('borrows_not_returned_list')}}"><button class="btn btn-primary">Voir les emprunts en cours</button></a>
+                </div>
+                <div style="display:none;" class="search-container-title">
+                    <input type="text"placeholder="ex : Spot" id="title-input" data-field="book.title"> 
+                    <button class="searchBorrow">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-firstName">
+                    <input type="text" placeholder="ex : Corentin" id="firstName-input" data-field="pupil.last_name"> 
+                    <button class="searchBorrow">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-date">
+                    <input type="text" placeholder="ex : 2020-05-26" id="date-input" data-field="date"> 
+                    <button class="searchBorrow">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-dateOfReturn">
+                    <input type="text" placeholder="ex : 2020-05-26" id="dateOfReturn-input" data-field="date_of_return"> 
+                    <button class="searchBorrow">Go</button>
+                </div> 
+                
+                <table class="table table-sm table-hover" id="table-borrow">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Livre <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="title"></th>
+                            <th>Elève <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="firstName"></th>
+                            <th>Date d'emprunt <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="date"></th>
+                            <th>Date de retour <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="dateOfReturn"></th>
+                        </tr>
+                    </thead>
                     {%for borrow in borrows %}
                         <tr class="result-borrow">
                             <td>{{borrow.book.title}}</td>

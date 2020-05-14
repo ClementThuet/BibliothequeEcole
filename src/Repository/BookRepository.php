@@ -28,6 +28,16 @@ class BookRepository extends ServiceEntityRepository
         $query = $entityManager->createNativeQuery('SELECT * FROM `book` WHERE `'.$field.'` LIKE "%'.$value.'%";', $rsm);
         return $query->getResult();
     }
+    
+    public function findNotBorrowed(){
+        
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.isBorrowed = :isBorrowed')
+            ->setParameter('isBorrowed', false)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Book

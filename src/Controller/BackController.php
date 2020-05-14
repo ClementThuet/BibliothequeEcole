@@ -71,7 +71,9 @@ class BackController extends AbstractController{
     {
         $repository = $this->getDoctrine()->getRepository(Pupil::class);
         $pupil = $repository->find($id);
-        return $this->render('back/pupil/pupil_detail.html.twig',['pupil'=>$pupil]);
+        $repositoryBorrow = $this->getDoctrine()->getRepository(Borrow::class);
+        $lastBorrow = $repositoryBorrow->findByLastBorrowOfPupil($id);
+        return $this->render('back/pupil/pupil_detail.html.twig',['pupil'=>$pupil,'lastBorrow'=>$lastBorrow]);
     }
     
     /**
@@ -81,7 +83,9 @@ class BackController extends AbstractController{
     {
         $repository = $this->getDoctrine()->getRepository(Book::class);
         $book = $repository->find($id);
-        return $this->render('back/book/book_detail.html.twig',['book'=>$book]);
+        $repositoryBorrow = $this->getDoctrine()->getRepository(Borrow::class);
+        $lastBorrow = $repositoryBorrow->findByLastBorrowOfBook($id);
+        return $this->render('back/book/book_detail.html.twig',['book'=>$book,'lastBorrow'=>$lastBorrow]);
     }
     
     /**
@@ -251,6 +255,7 @@ class BackController extends AbstractController{
             $entityManager->flush();
             return $this->redirectToRoute('books_list');
         }
+        
         return $this->render('back/book/book_edit.html.twig',['form'=>$form->createView(),'book'=>$book]);
     }
     
@@ -276,7 +281,8 @@ class BackController extends AbstractController{
         $pupil = $repository->find($idPupil);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($pupil);
-        $entityManager->flush();
+        //$entityManager->flush();
+        dd('not yet deleted');
         return $this->redirectToRoute('pupils_list');
     }
     
@@ -327,7 +333,8 @@ class BackController extends AbstractController{
                             <td>'.$isBorrowed.'</td>
                             <td>'.$dateLastBorrow.'</td>
                             <td>'.$dateLastReturn.'</td>
-                            <td><a href="/beb/public/admin/livre/'.$book->getId().'/modifier">Modifier</a>
+                            <td>'.$book->getOriginalLibrary().'</td>
+                            <td><a href="/beb/public/admin/livre/'.$book->getId().'/modifier"><img class="logo-table" src="/BEB/public/img/icons/edit.png"></a>
                         </tr>';
 
             }
@@ -360,9 +367,9 @@ class BackController extends AbstractController{
                             <td>'.$pupil->getFirstName().'</td>
                             <td>'.$dateOfBirth.'</td>
                             <td>'.$pupil->getGrade().'</td>
-                            <td><a href="/beb/public/admin/eleve/'.$pupil->getId().'/modifier">Modifier</a>
+                            <td><a href="/beb/public/admin/eleve/'.$pupil->getId().'/modifier"><img class="logo-table" src="/BEB/public/img/icons/edit.png"></a>
+                            <td><a <a onclick="return confirm(\'Are you sure?\')" href="/beb/public/admin/eleve/'.$pupil->getId().'/supprimer"><img class="logo-table" src="/BEB/public/img/icons/delete.png"></a>
                         </tr>';
-
             }
             $response = new Response(json_encode(array(
                 'pupils' => $pupils

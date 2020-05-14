@@ -9,4 +9,6 @@
     {%if pupil.image.url is defined %}
         <img src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">
     {%endif%}
+    Dernier emprunt :
+    {{lastBorrow.book.title}} le {{lastBorrow.date|date('d-m-Y')}}   
 {% endblock %}

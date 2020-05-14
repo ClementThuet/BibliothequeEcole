@@ -1,0 +1,140 @@
+.flex-center{
+    display:flex;
+    justify-content: center;
+}
+
+.navbar{
+    justify-content: flex-start;
+    align-items: center;
+}
+.logo-nav{
+    height:13vh;
+    margin-right:2vw;
+}
+.navbar a{
+    font-size: 1.5rem;
+    color:black;
+}
+.title-h1{
+    text-align: center;
+    font-size:3rem;
+    color:#137a13;
+    margin-bottom:3vh;
+    margin-top:1vh;
+}
+.pupils-container{
+ 
+}
+
+.pupil-picture-container{
+    text-align: center;
+    background-color:white;
+    border: 3px solid #582b04;
+    margin:1%;
+    padding:1%;
+}
+
+.pupil-picture{
+    width:12vw;
+}
+
+.book-picture-container{
+    width:14vw;
+    text-align: center;
+    background-color:white;
+    border: 3px solid #582b04;
+    margin:1vw;
+    padding:5px;
+}
+
+.book-picture{
+    width:100%;
+    border: 1px solid #582b04;
+}
+
+.book-return-picture-container{
+    text-align: center;
+    background-color:white;
+    border: 3px solid #582b04;
+    margin:1%;
+    padding:1%;
+}
+
+.book-return-picture{
+    width:25vw;
+}
+
+.code-input-container{
+    text-align: center;
+}
+
+.form-label-code{
+    font-size:2rem;
+}
+.bt_return{
+    display:flex;
+    justify-content: flex-end;
+    height: 13vh;
+}
+
+.btns-confirm-borrow-container{
+    display:flex;
+    text-align: center;
+    justify-content: center;
+    font-size:1.5rem;
+    color:#137a13;
+    margin-top:2vh;
+}
+.btns-confirm-borrow{
+    height: 10vh;
+}
+.result-pupil{
+    text-align:center;
+}
+
+.result-book{
+    text-align:center;
+}
+
+.table{
+    background-color:white;
+    text-align: center;
+    margin-top:2vh;
+}
+.table-header{
+    background-color:#137a13;
+    font-size: 1.1rem;
+}
+.table th{
+    border:1px solid black;
+}
+.table td{
+    border:1px solid black;
+}
+.logo-search{
+    width:1.5vw;
+}
+.logo-table{
+    height:5vh;
+}
+
+.logo-add-pupil{
+    width:4vw;
+}
+
+.logo-add-book{
+    width:3vw;
+    margin:10px;
+}
+.bt-add-pupil-container{
+    display:flex;
+    justify-content:flex-end;
+}
+.bt-add-pupil{
+    width:5vw;
+    background-color: white;
+    border:2px solid black;
+    text-align: center;
+    border-radius: 50%;
+    padding:2px;
+}

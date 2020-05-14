@@ -1,23 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 {% block title %}Accueil{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <h1>Clique sur ta photo</h1>
-                {%for pupil in pupils %}
-                    <a href="{{path('select_pupil_borrow',{'idPupil':pupil.id})}}">
-                        <div class="pupil-picture-hp" >
+            <div class="col-lg-12">
+                <h1 class="title-h1">Qui es-tu ?</h1>
+                <div class="pupils-container">
+                    <div class="row">
+                    {%for pupil in pupils %}
+                        <div class="col-lg-2 pupil-picture-container">
                             {% if pupil.image.url is defined and pupil.image.url is not null %}
-                                <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">
+                                <a href="{{path('select_pupil_borrow',{'idPupil':pupil.id})}}">
+                                    <img class="pupil-picture" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">
+                                </a>
                             {% else %}
-                                <img style="width:15vw;" src="/BEB/public/img/default-pupil.jpg" alt="{{pupil.nom}} {{pupil.prenom}}"> 
+                                <img class="pupil-picture" src="/BEB/public/img/default-pupil.jpg" alt="{{pupil.nom}} {{pupil.prenom}}"> 
                                 <h4>{{pupil.nom}} {{pupil.prenom}}</h4>
                             {%endif%}
                         </div>
-                    </a>
-                {%endfor%}
+                    {%endfor%}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
 {% endblock %}

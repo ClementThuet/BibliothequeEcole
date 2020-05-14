@@ -3,23 +3,31 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1> Livre rendu !</h1>
-                <div class="book-picture-return" >
-                     {% if book.image.url is defined and book.image.url is not null %}
-                         <img style="width:15vw;" src="{{book.image.url}}" alt="{{book.image.alt}}">  
-                     {% else %}
-                         <img style="width:15vw;" src="/BEB/public/img/default-book.png" alt="Image par défaut}">  
-                     {%endif%}
-                 </div>
-                 <div class="pupil-picture-return" >
-                     {% if pupil.image.url is defined and pupil.image.url is not null %}
-                         <img style="width:15vw;" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">  
-                     {% else %}
-                          <img style="width:15vw;" src="/BEB/public/img/default-pupil.jpg" alt="Image par défaut">  
-                     {%endif%}
-                 </div>    
+            <div class="col-lg-12">
+                <h1 class="title-h1"> Livre rendu </h1>
             </div>
-        </div> 
+        </div>
+        <div class="row">
+            <div class="col-6 flex">
+                <div class="book-return-picture-container" >
+                    {% if book.image.url is defined and book.image.url is not null %}
+                        <img class="book-return-picture" src="{{book.image.url}}" alt="{{book.image.alt}}">  
+                    {% else %}
+                        <img class="book-return-picture" src="/BEB/public/img/default-book.png" alt="Image par défaut}">  
+                    {%endif%}
+                    <h3>{{book.title}}</h3>
+                </div>
+            </div> 
+            <div class="col-6 flex">
+                <div class="book-return-picture-container" >
+                    {% if pupil.image.url is defined and pupil.image.url is not null %}
+                        <img class="book-return-picture" src="{{pupil.image.url}}" alt="{{pupil.image.alt}}">  
+                    {% else %}
+                         <img class="book-return-picture" src="/BEB/public/img/default-pupil.jpg" alt="Image par défaut">  
+                    {%endif%}
+                    <h3>{{pupil.firstName}} {{pupil.lastName}}</h3>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

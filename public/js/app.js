@@ -22,6 +22,18 @@ $(document).on('click', '.searchBook', function(){
     return false;
 });
 
+//Show research inputs
+$(document).on('click', '.logo-search', function(){
+    var field=$(this).data("field");
+    if($(".search-container-"+field+" " ).css('display') === "none")
+    {
+        $(".search-container-"+field+" " ).css('display','block');
+    }
+    else{
+       $(".search-container-"+field+" " ).css('display','none');
+    }
+});
+
 //Research on pupils
 $(document).on('click', '.searchPupil', function(){
     $( ".result-pupil" ).remove();

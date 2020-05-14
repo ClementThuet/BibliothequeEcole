@@ -55,6 +55,28 @@ class BorrowRepository extends ServiceEntityRepository
         ;
     }
     
+    public function findByLastBorrowOfBook($idBook){
+         return $this->createQueryBuilder('borrow')
+            ->andWhere('borrow.book = :idBook')
+            ->setParameter('idBook', $idBook)
+            ->orderBy("borrow.date", "DESC")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    
+    public function findByLastBorrowOfPupil($idPupil){
+         return $this->createQueryBuilder('borrow')
+            ->andWhere('borrow.pupil = :idPupil')
+            ->setParameter('idPupil', $idPupil)
+            ->orderBy("borrow.date", "DESC")
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    
     public function findByFieldValue($field,$value){
         
         $entityManager = $this->getEntityManager();
@@ -62,7 +84,10 @@ class BorrowRepository extends ServiceEntityRepository
         $rsm = new ResultSetMappingBuilder($entityManager);
         $rsm->addRootEntityFromClassMetadata('App\Entity\Borrow', 'borrow');
         $rsm->addJoinedEntityFromClassMetadata('App\Entity\Book', 'book', 'borrow', 'book', array('id' => 'book_id'));
-        $sql = "SELECT * FROM borrow INNER JOIN book ON borrow.book_id = book.id WHERE ".$field." LIKE '%".$value."%'";
+        //$rsm->addJoinedEntityFromClassMetadata('App\Entity\Pupil', 'pupil', 'borrow', 'pupil', array('id' => 'pupil_id'));
+         $sql = "SELECT book.title,pupil.last_name, date_of_borrow, date_of_return FROM borrow INNER JOIN book ON borrow.book_id = book.id  WHERE ".$field." LIKE '%".$value."%'";
+       // doesnt work
+       //  $sql = "SELECT book.title,pupil.last_name, date_of_borrow, date_of_return FROM borrow INNER JOIN book ON borrow.book_id = book.id INNER JOIN pupil ON borrow.`pupil_id` = pupil.id WHERE ".$field." LIKE '%".$value."%'";
         $query = $entityManager->createNativeQuery($sql, $rsm);
         return $query->getResult();
     }

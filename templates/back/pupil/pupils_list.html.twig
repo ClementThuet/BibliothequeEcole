@@ -4,28 +4,53 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Liste des élèves</h1>
-                <table id="table-pupil">
-                    <tr>
-                        <th>Nom</th><input type="text"  placeholder="ex : Lefevre" id="lastName-input" data-field="last_name">
-                        <button class="searchPupil">Go</button>
-                        <th>Prénom</th><input type="text"  placeholder="ex : Corentin" id="firstName-input" data-field="first_name">
-                        <button class="searchPupil">Go</button>
-                        <th>Date de naissance</th><input type="text"  placeholder="ex : 2018-12-26" id="dateOfBirth-input" data-field="date_of_birth">
-                        <button class="searchPupil">Go</button>
-                        <th>Niveau</th><input type="text"  placeholder="ex : PS" id="grade-input" data-field="grade">
-                        <button class="searchPupil">Go</button>
-                        <th>Modifier</th>
-                    </tr>
-                    {%for pupil in pupils %}
-                        <tr class="result-pupil" onclick="window.location='{{path('pupil_detail',{'id':pupil.id})}}'">
-                            <td>{{pupil.lastName}}</td>
-                            <td>{{pupil.firstName}}</td>
-                            <td>{{pupil.dateOfBirth|date('d-m-Y')}}</td>
-                            <td>{{pupil.grade}}</td>
-                            <td><a href="{{path('pupil_edit',{'idPupil':pupil.id})}}">Modifier</a>
+                <h1 class="title-h1">Liste des élèves</h1>
+                <div class="bt-add-pupil-container">
+                    <div class="bt-add-pupil">
+                        <a href="{{path('pupil_create')}}"><img class="logo-add-pupil" src="/BEB/public/img/icons/add_pupil.png"></a>
+                    </div>
+                </div>
+                <div style="display:none;" class="search-container-lastName">
+                    <input type="text"  placeholder="ex : Lefevre" id="lastName-input" data-field="last_name">
+                    <button class="searchPupil">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-firstName">
+                    <input type="text"  placeholder="ex : Corentin" id="firstName-input" data-field="first_name">
+                    <button class="searchPupil">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-dateOfBirth">
+                   <input type="text"  placeholder="ex : 2018-12-26" id="dateOfBirth-input" data-field="date_of_birth">
+                    <button class="searchPupil">Go</button>
+                </div>   
+                <div style="display:none;" class="search-container-grade">
+                    <input type="text"  placeholder="ex : PS" id="grade-input" data-field="grade">
+                    <button class="searchPupil">Go</button>
+                </div>
+                
+                <table class="table table-sm table-hover" id="table-pupil">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Nom <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="lastName"></th>
+                            <th>Prénom <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="firstName"></th>
+                            <th>Date de naissance <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="dateOfBirth"></th>
+                            <th>Niveau <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="grade"></th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
                         </tr>
-                    {%endfor%}
+                    <tbody>
+                        {%for pupil in pupils %}
+                            <tr class="result-pupil " onclick="window.location='{{path('pupil_detail',{'id':pupil.id})}}'">
+                                <td>{{pupil.lastName}}</td>
+                                <td>{{pupil.firstName}}</td>
+                                <td>{{pupil.dateOfBirth|date('d-m-Y')}}</td>
+                                <td>{{pupil.grade}}</td>
+                                <td><a href="{{path('pupil_edit',{'idPupil':pupil.id})}}"><img class="logo-table" src="/BEB/public/img/icons/edit.png"></a>
+                                <td><a onclick="return confirm('Are you sure?')" href="{{path('pupil_delete',{'idPupil':pupil.id})}}">
+                                <img class="logo-table" src="/BEB/public/img/icons/delete.png"></a></td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                    
                 </table>
             </div>
         </div>

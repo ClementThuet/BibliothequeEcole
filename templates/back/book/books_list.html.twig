@@ -1,41 +1,77 @@
 {% extends 'base.html.twig' %}
 {% block title %}Accueil{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h1>Liste des livres</h1>
-                <table id="table-book">
-                    <tr>
-                        <th>Titre</th> <input type="text"  placeholder="ex : Popi" id="title-input" data-field="title">
-                        <button class="searchBook">Go</button>
-                        <th>Auteur</th> <input type="text"  placeholder="ex : Clément"id="author-input" data-field="author">
-                        <button class="searchBook">Go</button>
-                        <th>Thème</th> <input type="text"  placeholder="ex : nature" id="theme-input" data-field="theme"> 
-                        <button class="searchBook">Go</button>
-                        <th>Code</th> <input type="text" placeholder="ex : 134456" id="code-input" data-field="code"> 
-                        <button class="searchBook">Go</button>
-                        <th>Emprunté</th> <input type="text" placeholder="0 pour non, 1 pour Oui" id="isBorrowed-input" data-field="is_borrowed"> 
-                        <button class="searchBook">Go</button>
-                        <th>Dernier emprunt</th> <input type="text" placeholder="ex : 2020-05-31" id="lastBorrow-input" data-field="date_last_borrow"> 
-                        <button class="searchBook">Go</button>
-                        <th>Retourné le</th> <input type="text" placeholder="ex : 2020-05-31" id="dateReturn-input" data-field="date_last_return"> 
-                        <button class="searchBook">Go</button>
-                        <th>Modifier</th>
-                    </tr>
-                    {%for book in books %}
-                        <tr class="result-book" onclick="window.location='{{path('book_detail',{'id':book.id})}}'">
-                            <td>{{book.title}}</td>
-                            <td>{{book.author}}</td>
-                            <td>{{book.theme}}</td>
-                            <td>{{book.code}}</td>
-                            <td>{% if book.isBorrowed == true %} Oui{% else%} Non {%endif%}</td>
-                            <td>{%if book.dateLastBorrow is not null%} {{book.dateLastBorrow|date('d-m-Y')}}{%else%}Jamais{%endif%}</td>
-                            <td>{%if book.dateLastReturn%}{{book.dateLastReturn|date('d-m-Y')}}{%else%}Non{%endif%}</td>
-                            <td>{{book.originalLibrary}}</td>
-                            <td><a href="{{path('book_edit',{'idBook':book.id})}}">Modifier</a>
+                <h1 class="title-h1">Liste des livres</h1>
+                <div class="bt-add-pupil-container">
+                    <div class="bt-add-pupil">
+                        <a href="{{path('book_create')}}"><img class="logo-add-book" src="/BEB/public/img/icons/add_book.png"></a>
+                    </div>
+                </div>
+                <div style="display:none;" class="search-container-title">
+                    <input type="text"  placeholder="ex : Popi" id="title-input" data-field="title">
+                    <button class="searchBook">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-author">
+                    <input type="text"  placeholder="ex : Clément" id="author-input" data-field="author">
+                    <button class="searchBook">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-theme">
+                    <input type="text"  placeholder="ex : nature" id="theme-input" data-field="theme"> 
+                    <button class="searchBook">Go</button>
+                </div>   
+                <div style="display:none;" class="search-container-code">
+                    <input type="text" placeholder="ex : 134456" id="code-input" data-field="code"> 
+                    <button class="searchBook">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-isBorrowed">
+                    <input type="text" placeholder="0 pour non, 1 pour Oui" id="isBorrowed-input" data-field="is_borrowed"> 
+                    <button class="searchBook">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-dateLastBorrow">
+                    <input type="text" placeholder="ex : 2020-05-31" id="lastBorrow-input" data-field="date_last_borrow"> 
+                    <button class="searchBook">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-dateLastReturn">
+                    <input type="text" placeholder="ex : 2020-05-31" id="dateReturn-input" data-field="date_last_return"> 
+                    <button class="searchBook">Go</button>
+                </div>
+                <div style="display:none;" class="search-container-originalLibrary">
+                    <input type="text" placeholder="ex : ecole" id="originalLibrary-input" data-field="original_library"> 
+                    <button class="searchBook">Go</button>
+                </div>    
+                    
+                <table class="table table-sm table-hover" id="table-book">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Titre <br><img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="title"></th> 
+                            <th>Auteur <br><img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="author"></th> 
+                            <th>Thème <br><img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="theme"></th> 
+                            <th>Code <br><img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="code"></th> 
+                            <th>Emprunté <br><img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="isBorrowed"></th>
+                            <th>Dernier emprunt <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="dateLastBorrow"></th>
+                            <th>Retourné le <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="dateLastReturn"></th>
+                            <th>Bibliothèque originel <img class="logo-search" src="/BEB/public/img/icons/loupe.png" data-field="originalLibrary"></th>
+                            <th>Modifier<br>&nbsp</th>
                         </tr>
-                    {%endfor%}
+                    </thead>
+                    <tbody>
+                        {%for book in books %}
+                            <tr class="result-book" onclick="window.location='{{path('book_detail',{'id':book.id})}}'">
+                                <td>{{book.title}}</td>
+                                <td>{{book.author}}</td>
+                                <td>{{book.theme}}</td>
+                                <td>{{book.code}}</td>
+                                <td>{% if book.isBorrowed == true %} Oui{% else%} Non {%endif%}</td>
+                                <td>{%if book.dateLastBorrow is not null%} {{book.dateLastBorrow|date('d-m-Y')}}{%else%}Jamais{%endif%}</td>
+                                <td>{%if book.dateLastReturn%}{{book.dateLastReturn|date('d-m-Y')}}{%else%}Non{%endif%}</td>
+                                <td>{{book.originalLibrary}}</td>
+                                <td><a href="{{path('book_edit',{'idBook':book.id})}}"><img class="logo-table" src="/BEB/public/img/icons/edit.png"></a></td></a>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
                 </table>
             </div>
         </div>

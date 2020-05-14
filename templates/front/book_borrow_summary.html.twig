@@ -1,26 +1,58 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 {% block title %}Emprunt effectué !{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h1>Emprunt effectué !</h1>
-                <div class="book-picture-return" >
-                    {% if borrow.book.image.url is defined and borrow.book.image.url is not null %}
-                        <img style="width:15vw;" src="{{borrow.book.image.url}}" alt="{{borrow.book.image.alt}}">  
-                    {% else %}
-                        <img style="width:15vw;" src="/BEB/public/img/default-book.png" alt="Image par défaut}">  
-                    {%endif%}
-                </div>
-                <div class="pupil-picture-return" >
-                    {% if borrow.pupil.image.url is defined and borrow.pupil.image.url is not null %}
-                        <img style="width:15vw;" src="{{borrow.pupil.image.url}}" alt="{{borrow.pupil.image.alt}}">  
-                    {% else %}
-                         <img style="width:15vw;" src="/BEB/public/img/default-pupil.jpg" alt="Image par défaut">  
-                    {%endif%}
-                </div>    
+            <div class="col-lg-12">
+                <h1 class="title-h1">Emprunt effectué !</h1>
             </div>
-            <a href="{{path('cancel_borrow',{'idBorrow':borrow.id})}}"> <button class="btn btn-danger">Annuler l'emprunt</button></a>
         </div>
+        <div class="row">
+            <div class="col-6 flex-center">
+                <div class="book-return-picture-container" >
+                    {% if borrow.book.image.url is defined and borrow.book.image.url is not null %}
+                        <img class="book-return-picture" src="{{borrow.book.image.url}}" alt="{{borrow.book.image.alt}}">  
+                    {% else %}
+                        <img class="book-return-picture" src="/BEB/public/img/default-book.png" alt="Image par défaut}">  
+                    {%endif%}
+                    <h3>{{borrow.book.title}}</h3>
+                </div>
+            </div> 
+            <div class="col-6 flex-center">
+                <div class="book-return-picture-container" >
+                    {% if borrow.pupil.image.url is defined and borrow.pupil.image.url is not null %}
+                        <img class="book-return-picture" src="{{borrow.pupil.image.url}}" alt="{{borrow.pupil.image.alt}}">  
+                    {% else %}
+                         <img class="book-return-picture" src="/BEB/public/img/default-pupil.jpg" alt="Image par défaut">  
+                    {%endif%}
+                    <h3>{{borrow.pupil.firstName}} {{borrow.pupil.lastName}}</h3>
+                </div>
+            </div>
+        </div>
+       
+        <div class="btns-confirm-borrow-container">
+            <div class="btns-confirm-borrow">
+                <a href="{{path('index')}}">
+                    <svg class="bi bi-check" width="100%" height="100%" viewBox="0 0 16 16" fill="black"  xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+                <span>Accueil</span>
+            </div>
+                    
+            <div class="btns-confirm-borrow">
+                <a href="{{path('cancel_borrow',{'idBorrow':borrow.id})}}">
+                    <svg class="bi bi-arrow-counterclockwise" width="100%" height="100%" viewBox="0 0 16 16" fill="red" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M12.83 6.706a5 5 0 00-7.103-3.16.5.5 0 11-.454-.892A6 6 0 112.545 5.5a.5.5 0 11.91.417 5 5 0 109.375.789z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M7.854.146a.5.5 0 00-.708 0l-2.5 2.5a.5.5 0 000 .708l2.5 2.5a.5.5 0 10.708-.708L5.707 3 7.854.854a.5.5 0 000-.708z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+                <span>Annuler l'emprunt</span>
+            </div>
+             
+           
+        </div>
+       
+       
     </div>
 {% endblock %}

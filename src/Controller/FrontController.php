@@ -36,7 +36,7 @@ class FrontController extends AbstractController{
             return $this->redirectToRoute('return_book', ['idPupil' => $idPupil]);
         }
         $repositoryBook = $this->getDoctrine()->getRepository(Book::class);
-        $books = $repositoryBook->findAll();
+        $books = $repositoryBook->findNotBorrowed();
         return $this->render('front/book_selection.html.twig',['pupil'=>$pupil,'books'=>$books]);
     }
     

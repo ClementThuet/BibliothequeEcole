@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="/BEB/public/css/bootstrap.min.css">
+            <link rel="stylesheet" href="/BEB/public/css/app.css">
+        {% endblock %}
+    </head>
+    <body style="background-color:#ccffcc">
+       
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <script src="/BEB/public/js/jquery-3.5.0.min.js"></script>
+            <script src="/BEB/public/js/app.js"></script>
+        {% endblock %}
+    </body>
+</html>
